@@ -16,3 +16,7 @@ Build static site
 ```bash
 npm run build
 ```
+
+
+If you want template without testing code, just take project from 2th commit for with purescript.
+1th commit without purescript
