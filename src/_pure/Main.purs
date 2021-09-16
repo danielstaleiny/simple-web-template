@@ -23,21 +23,23 @@ isSelectorEvent evt selector = do
     Nothing -> pure false
     (Just elem) -> matches (QuerySelector selector) elem
 
-clack :: Boolean -> Effect Unit
-clack false = pure unit
-clack true = log "clack"
+ifThen :: Effect Unit -> Boolean  -> Effect Unit
+ifThen _ false  = pure unit
+ifThen f true  = f
 
-cluck :: Boolean -> Effect Unit
-cluck false = pure unit
-cluck true = log "cluck"
+clack :: Event -> Effect Unit
+clack evt = log "clack"
+
+cluck :: Event -> Effect Unit
+cluck evt = log "cluck"
 
 
 fn :: Event -> Effect Unit
 fn evt = do
   let isSelector = isSelectorEvent evt
 
-  isSelector ".header-click" >>= clack
-  isSelector ".click-me" >>= cluck
+  isSelector "[click='clack']" >>= ifThen (clack evt)
+  isSelector "[click='cluck']" >>= ifThen (cluck evt)
 
 
 addEventListeners :: Effect Unit
