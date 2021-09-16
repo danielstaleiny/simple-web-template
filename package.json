@@ -20,6 +20,7 @@
     "postcss:watch:critical": "postcss src/_css/critical.css -o _site/_css/critical.css --watch",
     "postcss:watch:async": "postcss src/_css/index.css -o _site/_css/index.css --watch",
     "prettier:fix": "prettier --write '**/*.js' ",
+    "prep:dompurify": "npx esbuild src/_pure/imports/Dompurify.js --bundle --target=es5 --outfile=src/_pure/Dompurify.js",
     "cheatsheet": "node util/generate-cheatsheet.js",
     "upgrade": "run-s upgrade:*",
     "upgrade:check": "npm-check-updates -u",
