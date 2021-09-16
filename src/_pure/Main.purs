@@ -3,8 +3,9 @@ module Main where
 import Prelude
 
 import Data.Maybe (Maybe(..))
-import Debug (traceM)
 import Effect (Effect)
+import Effect.Aff (Aff, launchAff_)
+import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Placeholder (Template(..), templateInject)
 import Web.DOM.Element (fromEventTarget, matches)
@@ -17,25 +18,25 @@ import Web.HTML.HTMLDocument (toEventTarget)
 import Web.HTML.Window (document)
 
 
-isSelectorEvent :: Event -> String -> Effect Boolean
+isSelectorEvent :: Event -> String -> Aff Boolean
 isSelectorEvent evt selector = do
   case (fromEventTarget =<< target evt) of
     Nothing -> pure false
-    (Just elem) -> matches (QuerySelector selector) elem
+    (Just elem) -> liftEffect $ matches (QuerySelector selector) elem
 
-ifThen :: Effect Unit -> Boolean  -> Effect Unit
+ifThen :: Aff Unit -> Boolean  -> Aff Unit
 ifThen _ false  = pure unit
 ifThen f true  = f
 
-clack :: Event -> Effect Unit
-clack evt = log "clack"
+clack :: Event -> Aff Unit
+clack _ = liftEffect $ log "clack"
 
-cluck :: Event -> Effect Unit
-cluck evt = log "cluck"
+cluck :: Event -> Aff Unit
+cluck _ = liftEffect $ log "cluck"
 
 
-fn :: Event -> Effect Unit
-fn evt = do
+clickEventListeners :: Event -> Effect Unit
+clickEventListeners evt = launchAff_ do
   let isSelector = isSelectorEvent evt
 
   isSelector "[click='clack']" >>= ifThen (clack evt)
@@ -44,28 +45,16 @@ fn evt = do
 
 addEventListeners :: Effect Unit
 addEventListeners = do
-  fn_ <- eventListener fn
+  clickEventListeners_ <- eventListener clickEventListeners
   document_ <- window >>= document
 
   -- Click event listener
-  addEventListener click fn_ false (toEventTarget document_)
+  addEventListener click clickEventListeners_ false (toEventTarget document_)
 
 
 main :: Effect Unit
 main = do
   addEventListeners
-
--- document.addEventListener('click', function (event) {
--- 	// Check for the .click-me class
--- 	// If the clicked element doesn't have it, do nothing
--- 	if (!event.target.matches('.click-me')) return;
--- 	// The code you want to run goes here...
--- });
-
-
-  -- window
-  --   >>= document >>= addEventListener (EventType "click") cb false
-
 
   log "works log"
   log $ templateInject (Test "<p>[[test]]</p>" {test: "hello", so: "oau"})
