@@ -14,11 +14,11 @@ to generate this file without the comments in this block.
 , dependencies =
   [ "aff"
   , "console"
-  , "debug"
   , "effect"
   , "maybe"
   , "prelude"
   , "psci-support"
+  , "unsafe-coerce"
   , "web-dom"
   , "web-events"
   , "web-html"
