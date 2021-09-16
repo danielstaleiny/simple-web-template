@@ -17,27 +17,41 @@ import Web.HTML.HTMLDocument (toEventTarget)
 import Web.HTML.Window (document)
 
 
-isSelectorEvent :: Event -> Effect Boolean
-isSelectorEvent evt = do
+isSelectorEvent :: Event -> String -> Effect Boolean
+isSelectorEvent evt selector = do
   case (fromEventTarget =<< target evt) of
     Nothing -> pure false
-    (Just elem) -> matches (QuerySelector ".click-me") elem
+    (Just elem) -> matches (QuerySelector selector) elem
+
+clack :: Boolean -> Effect Unit
+clack false = pure unit
+clack true = log "clack"
+
+cluck :: Boolean -> Effect Unit
+cluck false = pure unit
+cluck true = log "cluck"
+
 
 fn :: Event -> Effect Unit
 fn evt = do
-  isClickMe <- isSelectorEvent evt
-  case isClickMe of
-    false -> pure unit
-    true -> do
-      log "clucken"
+  let isSelector = isSelectorEvent evt
 
+  isSelector ".header-click" >>= clack
+  isSelector ".click-me" >>= cluck
+
+
+addEventListeners :: Effect Unit
+addEventListeners = do
+  fn_ <- eventListener fn
+  document_ <- window >>= document
+
+  -- Click event listener
+  addEventListener click fn_ false (toEventTarget document_)
 
 
 main :: Effect Unit
 main = do
-  fn_ <- eventListener fn
-  document_ <- window >>= document
-  addEventListener click fn_ false (toEventTarget document_)
+  addEventListeners
 
 -- document.addEventListener('click', function (event) {
 -- 	// Check for the .click-me class
