@@ -2,12 +2,13 @@ module Clack where
 
 
 import Prelude
+
 import Data.Maybe (Maybe(..))
 import Dompurify (sanitize)
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import HtmlExtra (innerHTML, setInnerHTML)
-import Placeholder (Template(..), templateInject)
+import Placeholder (Nested(..), NestedHtml(..), Template(..), templateInject)
 import Web.DOM.NonElementParentNode (getElementById)
 import Web.Event.Event (Event)
 import Web.HTML (window)
@@ -25,6 +26,6 @@ clack _ = liftEffect do
   case box_, template_ of
     (Just box), (Just template) -> do
       html <- innerHTML template
-      html_ <- sanitize $ templateInject (Nested html {profile: {name: "Daniel"}, so: "oau"})
+      html_ <- sanitize $ templateInject (NestedT (NestedHtml html) (Nested {profile: {name: "Daniel"}, so: "oau"}))
       setInnerHTML html_ box
     _, _ -> pure unit

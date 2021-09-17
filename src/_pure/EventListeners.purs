@@ -8,6 +8,7 @@ import Effect.Aff (Aff, launchAff_)
 import Effect.Class (liftEffect)
 import Effect.Console (log)
 import Event (isSelectorEvent)
+import Hack (hack)
 import IfThen (ifThen)
 import Web.Event.Event (Event)
 import Web.Event.EventTarget (addEventListener, eventListener)
@@ -20,12 +21,15 @@ import Web.HTML.Window (document)
 cluck :: Event -> Aff Unit
 cluck _ = liftEffect $ log "cluck"
 
+
 clickEventListeners :: Event -> Effect Unit
 clickEventListeners evt = launchAff_ do
   let isSelector = isSelectorEvent evt
 
   isSelector "[click='clack']" >>= ifThen (clack evt)
   isSelector "[click='cluck']" >>= ifThen (cluck evt)
+  isSelector "[click='hack']" >>= ifThen (hack evt)
+
 
 addEventListeners :: Effect Unit
 addEventListeners = do
