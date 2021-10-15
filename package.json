@@ -14,7 +14,7 @@
     "11ty:watch": "ELEVENTY_ENV=development eleventy --watch --serve",
     "purescript:repl": "spago repl",
     "purescript:build": "NODE_ENV=production spago bundle-app --to src/_js/index.js",
-    "purescript:watch": "NODE_ENV=development spago bundle-app --watch --to src/_js/index.js",
+    "purescript:watch": "NODE_ENV=development spago bundle-module --watch --to src/_js/index.js",
     "postcss:build:critical": "postcss src/_css/critical.css -o _site/_css/critical.css",
     "postcss:build:async": "postcss src/_css/index.css -o _site/_css/index.css",
     "postcss:watch:critical": "postcss src/_css/critical.css -o _site/_css/critical.css --watch",

@@ -4,16 +4,16 @@ import Unsafe.Coerce (unsafeCoerce)
 
 foreign import placeholder :: forall r. String -> { | r } -> String
 
-data Test r = Test {test :: String | r}
-data Nested r = Nested {profile :: {name :: String} | r}
-data Profile r = Profile {name :: String, surname :: String | r}
-data Other r = Other {other :: String | r}
+newtype Test r = Test {test :: String | r}
+newtype Nested r = Nested {profile :: {name :: String} | r}
+newtype Profile r = Profile {name :: String, surname :: String | r}
+newtype Other r = Other {other :: String | r}
 
 
-data TestHtml = TestHtml String
-data NestedHtml = NestedHtml String
-data ProfileHtml = ProfileHtml String
-data OtherHtml = OtherHtml String
+newtype TestHtml = TestHtml String
+newtype NestedHtml = NestedHtml String
+newtype ProfileHtml = ProfileHtml String
+newtype OtherHtml = OtherHtml String
 
 data Template r = TestT TestHtml (Test r)
                 | NestedT NestedHtml (Nested r)
