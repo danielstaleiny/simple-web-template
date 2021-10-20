@@ -25,3 +25,9 @@ exports.setInnerText = function (innerText) {
     }
   }
 }
+
+exports.ctrlKey = function (event) {
+  return function () {
+    return event.ctrlKey || event.metaKey
+  }
+}

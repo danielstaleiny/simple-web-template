@@ -3,6 +3,7 @@ module Hack where
 
 import Prelude
 
+import CustomEvent (elemNotFound, err)
 import Data.Foldable (foldl)
 import Data.Maybe (Maybe(..))
 import Dompurify (sanitize)
@@ -36,4 +37,5 @@ hack _ = liftEffect do
       -- let arr' = [ProfileT (Profile ({name:"Dan", surname: "Stale"})), ProfileT (Profile ({name: "Druhy", surname: "User"}))]
       -- html' <- sanitize $ foldl (fnT html) "" arr'
       setInnerHTML html' box
-    _ , _ -> pure unit
+    Nothing, _ -> err <<< elemNotFound $ "ul"
+    _, Nothing -> err <<< elemNotFound $ "template-item"
