@@ -31,4 +31,4 @@ productShow n _ = liftEffect do
       html_ <- sanitize $ templateInject (ProductT (ProductHtml html) (Product {product: {title: "Product title "<> (show n), description: "Description of the product " <> (show n)} }))
       setInnerHTML html_ box
     Nothing, _ -> err <<< elemNotFound $ "box"
-    _, Nothing -> err <<< elemNotFound $ "product-template"
+    _, Nothing -> err {error: "Fix your html", description: "'product-template' id not found in your html!"}

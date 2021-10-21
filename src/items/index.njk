@@ -8,5 +8,6 @@ description: Overview page for items
 {% for item in collections.item %}
   <div>
     <h2><a href="{{item.url}}">{{item.data.title}}</a></h2>
+    <p>{{item.data.description}}</p>
   </div>
 {% endfor %}
