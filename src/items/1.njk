@@ -1,0 +1,23 @@
+---
+layout: root.njk
+title: Item 1 page
+tags:
+  - item
+allignore: true
+description: Item 1 description
+---
+
+<h1 class="h1">{{ title }}</h1>
+<p>
+  {{description}}
+</p>
+
+
+<p class="text-red-500" id="error"></p>
+
+<template id="error-template">
+    <div>
+        <p>[[error]]</p>
+        <p>[[description]]</p>
+    </div>
+</template>

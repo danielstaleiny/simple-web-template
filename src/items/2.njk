@@ -1,0 +1,27 @@
+---
+layout: root.njk
+title: Item 2 page
+tags:
+  - item
+allignore: true
+description: Item 2 description
+---
+<br />
+<div id="box">
+    <button class="btn-black  py-0.5 px-1" click="product2">Show product 2</button>
+</div>
+<template id="product-template">
+    <h1 class="h1">[[product.title]]</h1>
+    <p>
+        [[product.description]]
+    </p>
+</template>
+
+<p class="text-red-500" id="error"></p>
+
+<template id="error-template">
+    <div>
+        <p>[[error]]</p>
+        <p>[[description]]</p>
+    </div>
+</template>

@@ -1,0 +1,12 @@
+---
+layout: root.njk
+title: Items page
+allignore: true
+description: Overview page for items
+---
+{#% for item in collections.item | reverse %#}
+{% for item in collections.item %}
+  <div>
+    <h2><a href="{{item.url}}">{{item.data.title}}</a></h2>
+  </div>
+{% endfor %}

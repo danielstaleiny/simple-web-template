@@ -17,6 +17,7 @@ import Hack (hack)
 import HtmlExtra (ctrlKey, innerHTML, setInnerHTML)
 import IfThen (ifThen)
 import Placeholder (Error(..), ErrorHtml(..), Template(..), templateInject)
+import ProductShow (productShow)
 import Test (fetchHtmlAndRender, loadPage, windowTarget)
 import Web.DOM.Element (getAttribute)
 import Web.DOM.NonElementParentNode (getElementById)
@@ -61,6 +62,10 @@ clickEventListeners evt = launchAff_ do
   isSelector "[click='cluck']" >>= ifThen (cluck evt)
   isSelector "[click='hack']" >>= ifThen (hack evt)
   isSelector "[click='hack']" >>= ifThen (errorEvent evt)
+  isSelector "[click='product2']" >>= ifThen (productShow 2 evt)
+  isSelector "[click='product3']" >>= ifThen (productShow 3 evt)
+  isSelector "[click='product4']" >>= ifThen (productShow 4 evt)
+  isSelector "[click='product5']" >>= ifThen (productShow 5 evt)
 
   
 errorListeners :: Event -> Effect Unit
