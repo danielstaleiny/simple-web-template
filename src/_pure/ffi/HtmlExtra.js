@@ -1,10 +1,10 @@
-exports.innerHTML = function (node) {
+export function innerHTML(node) {
   return function () {
     return node.innerHTML
   }
 }
 
-exports.setInnerHTML = function (innerHTML) {
+export function setInnerHTML(innerHTML) {
   return function (node) {
     return function () {
       node.innerHTML = innerHTML
@@ -12,13 +12,13 @@ exports.setInnerHTML = function (innerHTML) {
   }
 }
 
-exports.innerText = function (node) {
+export function innerText(node) {
   return function () {
     return node.innerText
   }
 }
 
-exports.setInnerText = function (innerText) {
+export function setInnerText(innerText) {
   return function (node) {
     return function () {
       node.innerText = innerText
@@ -26,7 +26,7 @@ exports.setInnerText = function (innerText) {
   }
 }
 
-exports.ctrlKey = function (event) {
+export function ctrlKey(event) {
   return function () {
     return event.ctrlKey || event.metaKey
   }

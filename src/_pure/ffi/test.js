@@ -1,4 +1,4 @@
-exports.fetchHtmlAndRender = function (url) {
+export function fetchHtmlAndRender(url) {
   return function () {
     if (
       url === window.location.pathname ||
@@ -17,7 +17,7 @@ exports.fetchHtmlAndRender = function (url) {
   }
 }
 
-exports.loadPage = function () {
+export function loadPage() {
   return fetch(window.location.href)
     .then((res) => res.text())
     .then((ctx) => {
@@ -28,6 +28,6 @@ exports.loadPage = function () {
     .catch(console.log)
 }
 
-exports.windowTarget = function () {
+export function windowTarget() {
   return window
 }

@@ -4,8 +4,9 @@ let
     pkgs.fetchFromGitHub {
       owner = "justinwoo";
       repo = "easy-purescript-nix";
-      rev = "598aea7973c25b0a3fa976dcac629c39f2e56680";
-      sha256 = "04sg3ksy36g4xdrw4lk0kbmvyh3g7hrs9w6n9pfnyxv5rq30bdqb";
+      rev = "0ad5775c1e80cdd952527db2da969982e39ff592";
+      sha256 = "0x53ads5v8zqsk4r1mfpzf5913byifdpv5shnvxpgw634ifyj1kg";
+
     }
   ) {
     inherit pkgs;

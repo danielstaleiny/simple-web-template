@@ -2269,7 +2269,7 @@ function createDOMPurify() {
 
 var purify = createDOMPurify()
 
-exports.sanitize = function (dirty) {
+export function sanitize(dirty) {
   return function () {
     return purify.sanitize(dirty, { USE_PROFILES: { html: true } })
   }

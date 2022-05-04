@@ -1,4 +1,4 @@
-exports.placeholder = function (template) {
+export function placeholder(template) {
   return function (data) {
     /*!
      * Get an object value from a specific path

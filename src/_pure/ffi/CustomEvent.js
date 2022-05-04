@@ -1,4 +1,4 @@
-exports.dispatchCustomEvent = function (type) {
+export function dispatchCustomEvent(type) {
   return function (obj) {
     return function () {
       return document.dispatchEvent(
@@ -8,11 +8,11 @@ exports.dispatchCustomEvent = function (type) {
   }
 }
 
-exports.detail = function (evt) {
+export function detail(evt) {
   return evt.detail
 }
 
-exports.logAny = function (obj) {
+export function logAny(obj) {
   return function () {
     return console.log(obj)
   }
