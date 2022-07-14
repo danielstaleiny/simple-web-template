@@ -37,3 +37,6 @@ error = dispatchCustom <<< buildCustomData "error" <<< unsafeToForeign
 
 ui :: Template.Ui -> Aff Unit
 ui = dispatchCustom <<< buildCustomData "ui" <<< unsafeToForeign
+
+list :: Template.List -> Aff Unit
+list = dispatchCustom <<< buildCustomData "list" <<< unsafeToForeign

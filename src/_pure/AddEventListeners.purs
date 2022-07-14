@@ -34,6 +34,7 @@ customEventHandlers_ evt = launchAff_ do
 customEventHandlers :: String -> Foreign -> Aff Unit
 customEventHandlers "error" = Template.error
 customEventHandlers "ui" = Template.ui
+customEventHandlers "list" = Template.list
 customEventHandlers str = \_ -> liftEffect $ error $ "CustomEventHandlerType not found among customEventHandlers! type='" <> str <> "'"
 
 

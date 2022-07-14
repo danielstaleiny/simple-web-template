@@ -1,3 +1,8 @@
+export const placeholderArr = (template) => (arr) => {
+  return arr.map((it) => {
+    return placeholder(template)(it)
+  })
+}
 export const placeholder = (template) => (data) => {
   /*!
    * Get an object value from a specific path

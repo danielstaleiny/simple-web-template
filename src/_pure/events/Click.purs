@@ -13,4 +13,5 @@ click :: {event :: Event, element :: Element } -> Aff Unit
 click _ = do
   UI.ui {name: "UI"}
   UI.error {name: "ERROROR UI"}
+  UI.list [{name: "List UI"}, {name: "eyoo"}]
   liftEffect $ log "click"
