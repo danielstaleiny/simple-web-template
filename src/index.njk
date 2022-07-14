@@ -4,8 +4,26 @@ title: Title
 allignore: true
 description: Description
 ---
-<h1 click="cluck" class="h1">Simple web template</h1>
+<h1 click="click" class="h1">template</h1>
 <p class="text-lg">{{config.info}}</p>
+
+
+<div id="box-click"></div>
+<template id="template-click">
+    <div>
+        <p>[[name]]</p>
+    </div>
+</template>
+
+<p box-click="2"></p>
+<p box-click="2"></p>
+<template template-click="2">
+    <div>
+        <p>[[error]]</p>
+        <p>[[description]]</p>
+    </div>
+</template>
+
 <!-- <p click="clack" >
      Hello world
      </p>
@@ -40,5 +58,3 @@ description: Description
      <p>[[profile.name]]</p>
      </template>
 -->
-
-<script src="/_js/index2.js" type="module" ></script>

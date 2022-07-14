@@ -4,9 +4,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "justinwoo";
       repo = "easy-purescript-nix";
-      rev = "0ad5775c1e80cdd952527db2da969982e39ff592";
-      sha256 = "0x53ads5v8zqsk4r1mfpzf5913byifdpv5shnvxpgw634ifyj1kg";
-
+      rev = "5dca2f0f3b9ec0bceabb23fa1fd2b5f8ec30fa53";
+      sha256 = "1vsc08ik9rs7vhnv8bg6bqf6gyqvywjfr5502rw1wpird74whhcs";
     }
   ) {
     inherit pkgs;
@@ -16,5 +15,10 @@ pkgs.mkShell {
   buildInputs = [
     easy-ps.purs
     easy-ps.spago
+    pkgs.esbuild
   ];
+  shellHook = ''
+      alias e="exit"
+      alias cc="clear"
+    '';
 }

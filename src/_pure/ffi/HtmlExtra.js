@@ -1,33 +1,13 @@
-export function innerHTML(node) {
-  return function () {
-    return node.innerHTML
-  }
+export const innerHTML = (node) => () => {
+  return node.innerHTML
 }
 
-export function setInnerHTML(innerHTML) {
-  return function (node) {
-    return function () {
-      node.innerHTML = innerHTML
-    }
-  }
-}
+export const setInnerHTML = (innerHTML) => (node) => () =>
+  (node.innerHTML = innerHTML)
 
-export function innerText(node) {
-  return function () {
-    return node.innerText
-  }
-}
+export const innerText = (node) => () => node.innerText
 
-export function setInnerText(innerText) {
-  return function (node) {
-    return function () {
-      node.innerText = innerText
-    }
-  }
-}
+export const setInnerText = (innerText) => (node) => () =>
+  (node.innerText = innerText)
 
-export function ctrlKey(event) {
-  return function () {
-    return event.ctrlKey || event.metaKey
-  }
-}
+export const ctrlKey = (event) => () => event.ctrlKey || event.metaKey

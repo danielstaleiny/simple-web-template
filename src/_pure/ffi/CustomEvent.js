@@ -1,19 +1,17 @@
-export function dispatchCustomEvent(type) {
-  return function (obj) {
-    return function () {
-      return document.dispatchEvent(
-        new CustomEvent(type, { bubles: false, cancelable: false, detail: obj })
-      )
-    }
-  }
-}
+export const dispatchCustomEvent = (type) => (obj) => () =>
+  document.dispatchEvent(
+    new CustomEvent(type, {
+      bubles: false,
+      cancelable: false,
+      composed: false,
+      detail: obj,
+    })
+  )
 
-export function detail(evt) {
+export const detail = (evt) => {
   return evt.detail
 }
 
-export function logAny(obj) {
-  return function () {
-    return console.log(obj)
-  }
+export const logAny = (obj) => () => {
+  return console.log(obj)
 }

@@ -1,8 +1,6 @@
 /*! @license DOMPurify 2.3.2 | (c) Cure53 and other contributors | Released under the Apache license 2.0 and Mozilla Public License 2.0 | github.com/cure53/DOMPurify/blob/2.3.2/LICENSE */
 
-'use strict'
-
-function _toConsumableArray(arr) {
+export const _toConsumableArray = (arr) => {
   if (Array.isArray(arr)) {
     for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
       arr2[i] = arr[i]
@@ -2269,8 +2267,6 @@ function createDOMPurify() {
 
 var purify = createDOMPurify()
 
-export function sanitize(dirty) {
-  return function () {
-    return purify.sanitize(dirty, { USE_PROFILES: { html: true } })
-  }
+export const sanitize = (dirty) => () => {
+  return purify.sanitize(dirty, { USE_PROFILES: { html: true } })
 }
