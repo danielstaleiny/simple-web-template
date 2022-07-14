@@ -1,8 +1,8 @@
-module EventCatcher where
+module Util.EventCatcher where
 
 import Prelude
 
-import Data.Maybe (Maybe(..), maybe)
+import Data.Maybe (Maybe(..))
 import Effect.Aff (Aff)
 import Effect.Class (liftEffect)
 import Web.DOM.Element (Element)
