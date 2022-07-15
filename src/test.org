@@ -1,0 +1,18 @@
+---
+layout: root.njk
+title: Test site
+description: Test stuff
+---
+** Hi there
+:PROPERTIES:
+:ID:       8526473e-503a-4a93-8e40-873d867ba02c
+:END:
+This is new blog
+
+*bold*
+
+_underline_
+
+#+CAPTION: This is the caption for the next figure link (or table)
+#+NAME:   fig:SED-HR4049
+[[./_img/tile.png]]

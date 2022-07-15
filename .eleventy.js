@@ -2,6 +2,9 @@
 
 const glob = require('fast-glob')
 const path = require('path')
+const nodePandoc_ = require('node-pandoc');
+const util = require('util');
+const nodePandoc = util.promisify(nodePandoc_)
 
 /**
  * The @11ty/eleventy configuration.
@@ -9,6 +12,17 @@ const path = require('path')
  * For a full list of options, see: https://www.11ty.io/docs/config/
  */
 module.exports = (eleventyConfig) => {
+  eleventyConfig.addTemplateFormats('org')
+  eleventyConfig.addExtension('org', {
+    compile: async (inputContent, inputPath) => {
+      let output = await nodePandoc(inputContent, "-f org -t html")
+      output = output.replaceAll('src="./','src="/')
+      return async () => {
+        return output
+      }
+    },
+  })
+
   const paths = {
     filters: path.join(process.cwd(), 'lib/filters/*.js'),
     shortcodes: path.join(process.cwd(), 'lib/shortcodes/*.js'),
