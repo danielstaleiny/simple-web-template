@@ -4,15 +4,9 @@ export const placeholderArr = (template) => (arr) => {
   })
 }
 export const placeholder = (template) => (data) => {
-  /*!
-   * Get an object value from a specific path
-   * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
-   * @param  {Object}       obj  The object
-   * @param  {String|Array} path The path
-   * @param  {*}            def  A default value to return [optional]
-   * @return {*}                 The value
-   */
-  var get = function (obj, path, def) {
+  // Originally:
+  // (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
+  var get = function (obj, path) {
     /**
      * If the path is a string, convert it to an array
      * @param  {String|Array} path The path
@@ -23,7 +17,7 @@ export const placeholder = (template) => (data) => {
       if (typeof path !== 'string') return path
 
       // Create new array
-      var output = []
+      let output = []
 
       // Split to an array with dot notation
       path.split('.').forEach(function (item) {
@@ -43,12 +37,12 @@ export const placeholder = (template) => (data) => {
     path = stringToPath(path)
 
     // Cache the current object
-    var current = obj
+    let current = obj
 
     // For each item in the path, dig into the object
-    for (var i = 0; i < path.length; i++) {
+    for (let i = 0; i < path.length; i++) {
       // If the item isn't found, return the default (or null)
-      if (!current[path[i]]) return def
+      if (!current[path[i]]) return null
 
       // Otherwise, update the current  value
       current = current[path[i]]
@@ -56,18 +50,10 @@ export const placeholder = (template) => (data) => {
 
     return current
   }
-  // Replace our curly braces with data
-  template = template.replace(/\[\[([^\]]+)\]\]/g, function (match) {
-    // Remove the wrapping curly braces
-    match = match.slice(2, -2)
-
-    // Get the value
-    var val = get(data, match.trim())
-
-    // Replace
-    if (!val) return '[[' + match + ']]'
+  return template.replace(/\[\[([^\]]+)\]\]/g, function (match) {
+    const match_path = match.slice(2, -2) // Removes wrapping [[]]
+    const val = get(data, match_path.trim())
+    if (!val) return match
     return val
   })
-
-  return template
 }
