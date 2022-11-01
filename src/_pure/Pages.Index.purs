@@ -1,47 +1,64 @@
-module Main where
+module Pages.Index where
 
 import Prelude
 
+import AddEventListener as AddEventListener
 import Config (environment)
-import Control.Monad.Error.Class (class MonadThrow, throwError)
-import Control.Monad.Except (ExceptT, runExceptT)
-import Control.Monad.Reader (ReaderT, runReaderT)
-import Control.Plus (empty)
-import Data.Either (Either(..))
 import Effect (Effect)
-import Effect.Aff (Aff, error, launchAff, never)
-import Effect.Aff.Class (class MonadAff)
-import Effect.Class (class MonadEffect, liftEffect)
-import Effect.Console as Console
-import Events.AddEventListeners (addEventListeners)
+import Effect.Aff (launchAff, launchAff_)
+import EventListener.Click (click)
+import Events.Utils (customEventHandlers_)
+import Template.Events (customEventHandlers)
+import Template.Utils as TemplateUtils
+import Util.EventCatcher (matches)
+import Util.HTML (addEventListener, ifThen)
+import Web.Event.Event (Event)
+import Web.Event.EventTarget (eventListener)
+import Web.HTML.Event.EventTypes as EventType
 
 
-
-
--- (<*>) apply  :: f (a -> b) -> f a -> f b
--- (<$>) map  :: (a -> b) -> f a -> f b
--- (>>=) bind  :: m a -> (a -> m b) -> m b
--- (>=>) kleisly arrow  :: (a -> m b) -> (b -> m c) -> a -> m c
-
-
+-- Change how we call customEvent. What information we need to send are.
+-- Type "template"
+-- Array | Record
+-- Template Box
+-- Template Template
+-- Data
+--
+-- This way we can use generic function in customEventHandler
+--
+-- We can also add DOM functions so you can call them in the monad
+-- These could be more ergonomic than native methods, but we want to add same cabability,
+-- This way we can test it and swap the Effect methods.
+-- Test it out if we can call methods from capability.
 
 main :: Effect Unit
 main = do
-  -- log "PS Main loaded"
-  -- TODO this should
-  -- Needs class capability for each page, hase its own list of the event handler.
-  -- Each event handler runs our custom Monad stack
-  -- Each page defines UI capability class which defines methods available in that view,
-  -- this UI class is then passed to each eventhandler custom runApp method.
-  -- This way we separate load and separate logic for each page but re-use most of the code on each page.
-  -- Resould to be expect is lower js output on each page.
-  -- Preferably all the utilities should be its own module to be able to re-use the utils.
+  AddEventListener.click clickHandlers
+  AddEventListener.custom customEventHandlers
 
 
-  addEventListeners
-  void <<< launchAff $ runApp program environment
-  void <<< launchAff $ runApp program2 environment
-  pure unit
+
+
+
+  -- void <<< launchAff $ runApp program environment
+
+
+
+-- template :: Foreign -> Aff Unit
+-- template = Utils.renderRecord { box: "#box-error", template: "#template-error" }
+
+
+
+
+customEventHandlers :: String -> Foreign -> Aff Unit
+customEventHandlers "error" = Error.template
+customEventHandlers "ui" = Ui.template
+customEventHandlers "list" = List.template
+customEventHandlers str = \_ -> liftEffect $ Log.error $ "CustomEventHandlerType not found among customEventHandlers! type='" <> str <> "'"
+
+clickHandlers :: Event -> Effect Unit
+clickHandlers evt = launchAff_ do
+  matches evt "[click='click']" >>= ifThen click
 
 newtype Name = Name String
 
@@ -125,12 +142,3 @@ instance GetValue AppM where
 --   getUserName = liftEffect do
 --     -- some effectful thing that produces a string
 --     pure $ Name "some name"
-
-
-
-
-
-
-
-
-

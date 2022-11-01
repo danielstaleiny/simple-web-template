@@ -27,7 +27,8 @@
     "upgrade:install": "npm install",
     "upgrade:git-unstage-all": "git restore --staged .",
     "upgrade:git-stage-changes": "git add package.json package-lock.json",
-    "upgrade:git-auto-commit": "git commit -m 'Upgrade npm packages'; true"
+    "upgrade:git-auto-commit": "git commit -m 'Upgrade npm packages'; true",
+    "example-code-splitting": "esbuild --bundle --splitting --format=esm  --outdir=_site/_js src/_js/index2.js src/_js/index3.js"
   },
   "dependencies": {
     "dompurify": "^2.3.10"

@@ -14,3 +14,4 @@ callEvent = Utils.customEvent "error"
 
 template :: Foreign -> Aff Unit
 template = Utils.renderRecord { box: "#box-error", template: "#template-error" }
+

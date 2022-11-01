@@ -16,6 +16,8 @@ import Web.HTML.Event.EventTypes as EventType
 
 clickEventListeners :: Event -> Effect Unit
 clickEventListeners evt = launchAff_ do
+  -- Cost to pass event to everyfunction is very little.
+  -- Therefore we don not split events for everypage but re-use this function for all the pages instead.
   matches evt "[click='click']" >>= ifThen click
 
 addEventListeners :: Effect Unit
