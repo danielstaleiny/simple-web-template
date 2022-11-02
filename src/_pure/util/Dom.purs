@@ -2,6 +2,7 @@ module Util.HTML where
 
 import Prelude
 
+import Config (Environment)
 import Data.Maybe (Maybe, maybe)
 import Effect (Effect)
 import Effect.Aff (Aff)
@@ -20,3 +21,9 @@ ifThen :: (EventObj -> Aff Unit) -> Maybe EventObj -> Aff Unit
 ifThen fn maybeObj = maybe stopExecution fn maybeObj
   where
     stopExecution = pure unit
+
+-- ifThen :: (forall a. AppM a -> Environment -> Aff Unit) -> Environment -> (EventObj -> Aff Unit) -> Maybe EventObj -> Aff Unit
+-- ifThen runT environment fn maybeObj = maybe stopExecution runFn maybeObj
+--   where
+--     stopExecution = pure unit
+--     runFn obj = runT (fn obj) environment

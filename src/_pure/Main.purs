@@ -8,20 +8,75 @@ import Control.Monad.Except (ExceptT, runExceptT)
 import Control.Monad.Reader (ReaderT, runReaderT)
 import Control.Plus (empty)
 import Data.Either (Either(..))
+import Data.Maybe (Maybe(..))
 import Effect (Effect)
+import Effect.Aff (Aff)
 import Effect.Aff (Aff, error, launchAff, never)
+import Effect.Aff (launchAff_)
 import Effect.Aff.Class (class MonadAff)
 import Effect.Class (class MonadEffect, liftEffect)
+import Effect.Class (liftEffect)
 import Effect.Console as Console
-import Events.AddEventListeners (addEventListeners)
+import Events.Utils (customEventHandlers_)
+import Template.Events (customEventHandlers)
+import Template.Render as HTML
+import Template.Utils as TemplateUtils
+import Util.EventCatcher (matches)
+import Util.HTML (addEventListener, ifThen)
+import Util.HTML as Util.HTML
+import Web.DOM (Element)
+import Web.Event.Event (Event)
+import Web.Event.Event (Event)
+import Web.Event.EventTarget (eventListener)
+import Web.HTML.Event.EventTypes as EventType
 
 
+
+  -- void <<< launchAff $ runApp
+  -- environment
+
+  -- program
+
+
+click ::  forall m. -- AppM
+          MonadAff m =>
+          MonadThrow String m =>
+          LogToScreen m =>
+          GetValue m =>
+          {event :: Event, element :: Element }
+          -> m Unit
+click _ = do
+  log "Click"
+  -- HTML.error {name: "ERROROR UI"}
+  -- HTML.ui {name: "UI" }
+  -- HTML.list [{name: "List UI"}, {name: "eyoo"}]
+  -- liftEffect $ Console.log "click"
 
 
 -- (<*>) apply  :: f (a -> b) -> f a -> f b
 -- (<$>) map  :: (a -> b) -> f a -> f b
 -- (>>=) bind  :: m a -> (a -> m b) -> m b
 -- (>=>) kleisly arrow  :: (a -> m b) -> (b -> m c) -> a -> m c
+
+
+
+clickEventListeners :: Event -> Effect Unit
+clickEventListeners evt = launchAff_ do
+  let match q = matches evt q
+  let appM fn ev = runApp (fn ev) environment
+  let then_ predicate fn = predicate >>= ifThen (appM fn)
+  -- Cost to pass event to everyfunction is very little.
+  -- Therefore we don not split events for everypage but re-use this function for all the pages instead.
+  match "[click='click']" `then_` click
+
+
+
+addEventListeners :: Effect Unit
+addEventListeners = do
+  -- Click event listeners
+  addEventListener EventType.click =<< eventListener clickEventListeners
+  -- Custom event listeners
+  addEventListener TemplateUtils.customEventType =<< eventListener (customEventHandlers_ customEventHandlers)
 
 
 
